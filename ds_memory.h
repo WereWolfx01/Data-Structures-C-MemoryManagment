@@ -19,8 +19,7 @@ struct ds_file_struct {
   struct ds_blocks_struct block[MAX_BLOCKS];
 };
 
-struct ds_file_struct ds_file;
-struct ds_counts_struct ds_counts;
+
 
 int ds_create( char *filename, long size );
 int ds_init( char *filename );
