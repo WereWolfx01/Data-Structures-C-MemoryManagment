@@ -17,9 +17,6 @@ int ds_create( char *filename, long size ) {
     ds_file.block[i].alloced = '0';
   }
   fp = fopen( filename, "wb" );
-  if ( fp == NULL ) {
-    return 1;
-  }
   if ( fwrite( ds_file.block, sizeof(struct ds_blocks_struct), MAX_BLOCKS, fp ) != MAX_BLOCKS) {
     return 1;
   }
@@ -37,4 +34,31 @@ int ds_create( char *filename, long size ) {
 
 
   return 0;
+}
+
+
+int ds_init( char *filename ) {
+  ds_file.fp = fopen( filename, "rb+" );
+  if ( ds_file.fp == NULL ) {
+    return 1;
+  }
+  if ( fread( ds_file.block, sizeof(struct ds_blocks_struct), MAX_BLOCKS, ds_file.fp ) != MAX_BLOCKS ) {
+    return 1;
+  }
+  ds_counts.reads = 0;
+  ds_counts.writes = 0;
+
+
+  return 0;
+}
+
+void ds_test_init() {
+  int i;
+
+  printf("Block #      start      length      alloced\n");
+  for (i=0; i<MAX_BLOCKS; i++) {
+  printf("     %d        %ld         %ld           %c\n", i, ds_file.block[i].start, ds_file.block[i].length, ds_file.block[i].alloced);
+  }
+  printf("reads = %d\n", ds_counts.reads);
+  printf("writes = %d\n", ds_counts.writes);
 }

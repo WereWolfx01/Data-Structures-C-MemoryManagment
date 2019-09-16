@@ -23,6 +23,7 @@ struct ds_file_struct {
 
 int ds_create( char *filename, long size );
 int ds_init( char *filename );
+void ds_test_init(); /*print out contents of blocks*/
 int ds_malloc( long amount );
 void ds_free( long start );
 void *ds_read( void *ptr, long start, long bytes );
