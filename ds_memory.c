@@ -59,6 +59,50 @@ void ds_test_init() {
   for (i=0; i<MAX_BLOCKS; i++) {
   printf("     %d        %ld         %ld           %c\n", i, ds_file.block[i].start, ds_file.block[i].length, ds_file.block[i].alloced);
   }
-  printf("reads = %d\n", ds_counts.reads);
-  printf("writes = %d\n", ds_counts.writes);
+}
+
+long ds_malloc( long amount ) {
+  long i, j;
+  printf("searching for block with amount %ld\n", amount);
+  for( i=0; i<MAX_BLOCKS; i++ ) {
+    if( ds_file.block[i].length >= amount && ds_file.block[i].alloced == '0' ) {
+      for( j=0; j<MAX_BLOCKS; j++ ) {
+        if( ds_file.block[j].length == 0 ) {
+          ds_file.block[j].start = ds_file.block[i].start + amount;
+          ds_file.block[j].length = ds_file.block[i].length - amount;
+          ds_file.block[j].alloced = '0';
+          break;
+        }
+      }
+      /*printf("block %ld with length = %ld is not yet alloced\n", i, ds_file.block[i].length);*/
+      ds_file.block[i].length = amount;
+      ds_file.block[i].alloced = '1';
+      return i;
+    }
+  }
+  return -1;
+}
+
+void ds_free( long start ) {
+  int i;
+  for( i=0; i<MAX_BLOCKS; i++) {
+    if( i == start ) {
+      ds_file.block[i].alloced = '0';
+    }
+  }
+}
+
+int ds_finish() {
+
+  /*return 0 if unsuccessful (code unfinished)*/
+
+  fseek(ds_file.fp, 0, SEEK_SET); /*Seek to start of file*/
+  fwrite( ds_file.block, sizeof(struct ds_blocks_struct), MAX_BLOCKS, ds_file.fp );
+  fclose(ds_file.fp);
+  printf("reads: %d\n", ds_counts.reads);
+  printf("writes: %d\n", ds_counts.writes);
+
+
+  return 1;
+
 }
