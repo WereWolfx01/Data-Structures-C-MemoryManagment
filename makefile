@@ -33,4 +33,5 @@ clean:
 	rm a1_create
 	rm a1_view
 	rm a1_write
+	rm a1_read
 	rm *.bin
