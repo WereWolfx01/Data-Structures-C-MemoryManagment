@@ -21,7 +21,6 @@ int ds_init_array()
   ds_init("array.bin");
   ds_read( &temp, 0, sizeof(long) );
   elements = temp;
-  printf("temp = %ld\n", temp);
   /*if unsuccessful returnvalue other than 0*/
   return 0;
 }
@@ -40,11 +39,35 @@ void show_array()
 
 int ds_replace( int value, long index )
 {
+  long size;
+  if ( (index >= elements) || (index < 0) )
+  {
+    printf("Invalid index\n");
+    return 1;
+  }
+  size = index * sizeof(int) + sizeof(elements);
+  ds_write( size, &value, 4 );
+  /*return other than 0 if unssuccessful invalid index for example*/
   return 0;
 }
 
 int ds_insert( int value, long index )
 {
+  int old, new, i;
+  long location;
+  new = value;
+  for (i=index; i<=elements; i++)
+  {
+    location = (i * sizeof(int)) + sizeof(elements);
+    ds_read( &old, location, 4 );
+    ds_write( location, &new, 4);
+    new = old;
+    /*return other than 0 if unsuccessful*/
+
+  }
+  elements++;
+
+
   return 0;
 }
 
@@ -65,6 +88,25 @@ long ds_find( int target )
 
 int ds_read_elements( char *filename )
 {
+  FILE *fp;
+  int value;
+  long index;
+  fp = fopen(filename, "r");
+  while (!feof(fp))
+  {
+    if ( fscanf( fp, "%d", &value) != 1 )
+    {
+      break;
+    }
+    if ( index > MAX_ELEMENTS ) {
+      return 1;
+    }
+    ds_insert( value, index );
+
+    index++;
+  }
+  /*return non 0 if unssucessful, file errors, exceeding MAX elements*/
+
   return 0;
 }
 
