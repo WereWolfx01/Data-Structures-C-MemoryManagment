@@ -42,7 +42,7 @@ int ds_replace( int value, long index )
   long size;
   if ( (index >= elements) || (index < 0) )
   {
-    printf("Invalid index\n");
+    /*printf("Invalid index\n");*/
     return 1;
   }
   size = index * sizeof(int) + sizeof(elements);
@@ -73,16 +73,58 @@ int ds_insert( int value, long index )
 
 int ds_delete( long index )
 {
+  int i, temp;
+  long current, next;
+  if ( (index >= elements) || (index < 0) || (elements == 0) ) {
+    printf("Invalid index\n");
+    return 1;
+  }
+  for ( i=index; i<(elements-1); i++ )
+  {
+    current = ( ( i * sizeof(int) ) + sizeof(long) );
+    next = ( ( (i+1) * sizeof(int) ) + sizeof(long) );
+    ds_read( &temp, next, 4 );
+    ds_write( current, &temp, 4 );
+  }
+  elements--;
+  /*return other than 0 if unssuccessful*/
   return 0;
 }
 
 int ds_swap( long index1, long index2 )
 {
+  int temp1, temp2;
+  long address1, address2;
+  if ( (index1 >= elements) || (index2 >= elements) || (index1 < 0) || (index2 < 0) )
+  {
+    printf("Invalid index\n");
+    return 1;
+  }
+  address1 = (index1 * sizeof(int)) + sizeof(long);
+  address2 = (index2 * sizeof(int)) + sizeof(long);
+  ds_read( &temp1, address1, 4 );
+  ds_read( &temp2, address2, 4 );
+  ds_write( address2, &temp1, 4 );
+  ds_write( address1, &temp2, 4 );
+
   return 0;
 }
 
 long ds_find( int target )
 {
+  int i, temp;
+  long address;
+  for ( i=0; i<elements; i++ )
+  {
+    address = (i * sizeof(int)) + sizeof(long);
+    ds_read( &temp, address, 4 );
+    if ( temp == target )
+    {
+      return i;
+    }
+  }
+  return -1;
+
   return 0;
 }
 
@@ -92,6 +134,12 @@ int ds_read_elements( char *filename )
   int value;
   long index;
   fp = fopen(filename, "r");
+  if ( !(fp) )
+  {
+    /*printf("Error cannot open file\n");*/
+    return 1;
+  }
+
   while (!feof(fp))
   {
     if ( fscanf( fp, "%d", &value) != 1 )

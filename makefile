@@ -4,7 +4,7 @@ HEADER = ds_memory.h
 HEADER2 = ds_array.h
 
 
-all: ds_memory main a1_create a1_malloc a1_view a1_write a1_read ds_array create_array show_array insert replace_array read_elements
+all: ds_memory main a1_create a1_malloc a1_view a1_write a1_read ds_array create_array show_array insert replace_array read_elements delete_array swap_array find_array
 
 ds_memory: $(HEADER) ds_memory.c
 	$(CC) $(CFLAGS) ds_memory.c -o ds_memory.o -c
@@ -45,6 +45,15 @@ replace_array: $(HEADER2) $(HEADER) replace_array.c ds_array ds_memory
 read_elements: $(HEADER2) $(HEADER) read_elements.c ds_array ds_memory
 	$(CC) $(CFLAGS) read_elements.c ds_array.o ds_memory.o -o read_elements
 
+delete_array: $(HEADER2) $(HEADER) delete_array.c ds_array ds_memory
+	$(CC) $(CFLAGS) delete_array.c ds_array.o ds_memory.o -o delete_array
+
+swap_array: $(HEADER2) $(HEADER) swap_array.c ds_array ds_memory
+	$(CC) $(CFLAGS) swap_array.c ds_array.o ds_memory.o -o swap_array
+
+find_array: $(HEADER2) $(HEADER) find_array.c ds_array ds_memory
+	$(CC) $(CFLAGS) find_array.c ds_array.o ds_memory.o -o find_array
+
 clean:
 	rm *.o
 	rm main
@@ -58,4 +67,7 @@ clean:
 	rm insert
 	rm replace_array
 	rm read_elements
+	rm delete_array
+	rm swap_array
+	rm find_array
 	rm *.bin
