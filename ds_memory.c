@@ -59,8 +59,8 @@ void ds_test_init() {
   for (i=0; i<MAX_BLOCKS; i++) {
   printf("     %d        %ld         %ld           %c\n", i, ds_file.block[i].start, ds_file.block[i].length, ds_file.block[i].alloced);
   }
-  printf("reads = %d\n", ds_counts.reads);
-  printf("writes = %d\n", ds_counts.writes);
+  printf("reads: %d\n", ds_counts.reads);
+  printf("writes: %d\n", ds_counts.writes);
 }
 
 long ds_malloc( long amount ) {

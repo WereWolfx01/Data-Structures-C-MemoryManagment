@@ -2,9 +2,10 @@ CFLAGS = -ansi -pedantic -Wall
 CC = gcc
 HEADER = ds_memory.h
 HEADER2 = ds_array.h
+HEADER3 = ds_list.h
 
 
-all: ds_memory main a1_create a1_malloc a1_view a1_write a1_read ds_array create_array show_array insert replace_array read_elements delete_array swap_array find_array
+all: ds_memory main a1_create a1_malloc a1_view a1_write a1_read ds_array create_array show_array insert replace_array read_elements delete_array swap_array find_array ds_list create_list show_list
 
 ds_memory: $(HEADER) ds_memory.c
 	$(CC) $(CFLAGS) ds_memory.c -o ds_memory.o -c
@@ -54,6 +55,15 @@ swap_array: $(HEADER2) $(HEADER) swap_array.c ds_array ds_memory
 find_array: $(HEADER2) $(HEADER) find_array.c ds_array ds_memory
 	$(CC) $(CFLAGS) find_array.c ds_array.o ds_memory.o -o find_array
 
+ds_list: $(HEADER3) $(HEADER2) $(HEADER) ds_list.c
+	$(CC) $(CFLAGS) ds_list.c -o ds_list.o -c
+
+create_list: $(HEADER3) $(HEADER2) $(HEADER) create_list.c
+	$(CC) $(CFLAGS) create_list.c ds_list.o ds_memory.o -o create_list
+
+show_list: $(HEADER3) $(HEADER2) $(HEADER) show_list.c
+	$(CC) $(CFLAGS) show_list.c ds_list.o ds_memory.o -o show_list
+
 clean:
 	rm *.o
 	rm main
@@ -70,4 +80,6 @@ clean:
 	rm delete_array
 	rm swap_array
 	rm find_array
+	rm create_list
+	rm show_list
 	rm *.bin
