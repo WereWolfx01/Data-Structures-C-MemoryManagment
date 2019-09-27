@@ -16,3 +16,4 @@ long ds_find( int target );
 int ds_read_elements( char *filename );
 int ds_finish_list();
 void show_list();
+int ds_read_elements( char *filename );

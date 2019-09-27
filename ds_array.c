@@ -150,7 +150,6 @@ int ds_read_elements( char *filename )
       return 1;
     }
     ds_insert( value, index );
-
     index++;
   }
   /*return non 0 if unssucessful, file errors, exceeding MAX elements*/
