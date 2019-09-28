@@ -115,6 +115,86 @@ int ds_delete( long index )
   return 0;
 }
 
+int ds_swap( long index1, long index2 )
+{
+  int i1, i2, temp1, temp2;
+  long previous_loc, loc1 ,loc2;
+  struct ds_list_item_struct previous, swap1, swap2;
+
+
+  if (index1 == index2)
+  {
+    return 0;
+  }
+  else if( index1 > index2 )
+  {
+    i1 = index2;
+    i2 = index1;
+  }
+  else
+  {
+    i1 = index1;
+    i2 = index2;
+  }
+
+  ds_read( &previous.next, 0, sizeof(long) );
+  for ( ; i1>0; i1--)
+  {
+    if( previous.next == -1 )
+    {
+      return -1;
+    }
+    previous_loc = previous.next;
+    ds_read( &previous, previous_loc, 16 );
+  }
+  loc1 = previous.next;
+  ds_read( &swap1, loc1, sizeof(struct ds_list_item_struct) );
+  temp1 = swap1.item;
+
+  ds_read( &previous.next, 0, sizeof(long) );
+  for ( ; i2>0; i2--)
+  {
+    if( previous.next == -1 )
+    {
+      return -1;
+    }
+    previous_loc = previous.next;
+    ds_read( &previous, previous_loc, 16 );
+  }
+  loc2 = previous.next;
+  ds_read( &swap2, loc2, sizeof(struct ds_list_item_struct) );
+  temp2 = swap2.item;
+
+  swap1.item = temp2;
+  swap2.item = temp1;
+
+  ds_write( loc1, &swap1, sizeof(struct ds_list_item_struct) );
+  ds_write( loc2, &swap2, sizeof(struct ds_list_item_struct) );
+
+  return 0;
+}
+
+long ds_find( int target )
+{
+  int i = 0;
+  struct ds_list_item_struct current;
+  long location;
+  ds_read( &current.next, 0, sizeof(long) );
+  location = current.next;
+  while ( location != -1)
+  {
+    ds_read( &current, location, sizeof(struct ds_list_item_struct) );
+    if( current.item == target )
+    {
+      return i;
+    }
+    location = current.next;
+    i++;
+  }
+
+  return -1;
+}
+
 int ds_finish_list()
 {
   if (ds_finish() != 0)
