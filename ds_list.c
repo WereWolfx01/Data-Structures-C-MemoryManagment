@@ -121,7 +121,7 @@ int ds_swap( long index1, long index2 )
   long previous_loc, loc1 ,loc2;
   struct ds_list_item_struct previous, swap1, swap2;
 
-
+  /* if statements used to check for the lower index so the function can travesrse starting with lower index */
   if (index1 == index2)
   {
     return 0;
@@ -229,7 +229,7 @@ int ds_read_elements( char *filename )
   if ( !(fp) )
   {
     /*printf("Error cannot open file\n");*/
-    return 1;
+    return -1;
   }
   while (!feof(fp))
   {
@@ -241,7 +241,6 @@ int ds_read_elements( char *filename )
     printf("inserting %d at %ld\n", value, index);
     index++;
   }
-  /*return non 0 if unssucessful, file errors, exceeding MAX elements*/
 
   return 0;
 }

@@ -137,7 +137,7 @@ int ds_read_elements( char *filename )
   if ( !(fp) )
   {
     /*printf("Error cannot open file\n");*/
-    return 1;
+    return -1;
   }
 
   while (!feof(fp))
@@ -147,12 +147,11 @@ int ds_read_elements( char *filename )
       break;
     }
     if ( index > MAX_ELEMENTS ) {
-      return 1;
+      return -1;
     }
     ds_insert( value, index );
     index++;
   }
-  /*return non 0 if unssucessful, file errors, exceeding MAX elements*/
 
   return 0;
 }
@@ -161,6 +160,5 @@ int ds_finish_array()
 {
   ds_write(0, &elements, sizeof(elements));
   ds_finish();
-  /*return non 0 if non successful*/
   return 0;
 }

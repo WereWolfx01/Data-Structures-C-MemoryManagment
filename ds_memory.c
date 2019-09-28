@@ -116,7 +116,6 @@ void *ds_read( void *ptr, long start, long bytes ) {
   fread( ptr, 1, bytes, ds_file.fp );\
   ds_counts.reads++;
   return ptr;
-  /*return NULL IF unsuccessful*/
 }
 
 long ds_write( long start, void *ptr, long bytes ) {
@@ -124,5 +123,4 @@ long ds_write( long start, void *ptr, long bytes ) {
   fwrite( ptr, bytes, 1, ds_file.fp );
   ds_counts.writes++;
   return start;
-  /*return -1 if soemthing goes wrong*/
 }
