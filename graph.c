@@ -1,10 +1,14 @@
-#include "ds_array.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include "ds_memory.h"
+#include "ds_list.h"
+
 
 int main ( int argc, char **argv )
 {
-  int i, randomIndex, numLines;
+  int numLines, i, randomInt, randomIndex;
   long index;
+  FILE *fp;
 
   if (argc !=2)
   {
@@ -13,20 +17,27 @@ int main ( int argc, char **argv )
   }
   numLines = atoi(argv[1]);
 
+  fp = fopen( "elements.txt", "w+" );
+  for ( i=numLines; i>0; i-- )
+  {
+    randomInt = rand() % ((100 + 1 - 0) + 0);
+    fprintf(fp, "%d\n", randomInt);
+  }
 
-  ds_init_array();
+  /*ds_init_list();
   ds_read_elements("elements.txt");
-  ds_finish_array();
+  ds_finish_list();*/
 
-
-  ds_init_array();
+  /*
+  ds_init_list();
   for( i=30; i>0; i--)
   {
     randomIndex = rand() % (((numLines-1) + 1 - 0) + 0);
     index = randomIndex;
-    printf("replacing %d at %ld\n", 0, index);
     ds_replace(0 , index);
   }
-  ds_finish_array();
+  ds_finish_list();
+*/
+
   return 0;
 }

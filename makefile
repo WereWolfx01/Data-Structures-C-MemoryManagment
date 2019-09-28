@@ -5,7 +5,7 @@ HEADER2 = ds_array.h
 HEADER3 = ds_list.h
 
 
-all: ds_memory main a1_create a1_malloc a1_view a1_write a1_read ds_array create_array show_array insert replace_array read_elements delete_array swap_array find_array ds_list create_list show_list replace_list insert_list read_list_elements delete_list swap_list find_list
+all: ds_memory graph main a1_create a1_malloc a1_view a1_write a1_read ds_array create_array show_array insert replace_array read_elements delete_array swap_array find_array ds_list create_list show_list replace_list insert_list read_list_elements delete_list swap_list find_list
 
 ds_memory: $(HEADER) ds_memory.c
 	$(CC) $(CFLAGS) ds_memory.c -o ds_memory.o -c
@@ -82,6 +82,9 @@ swap_list: $(HEADER3) $(HEADER2) $(HEADER) swap_list.c
 find_list: $(HEADER3) $(HEADER2) $(HEADER) find_list.c
 	$(CC) $(CFLAGS) find_list.c ds_list.o ds_memory.o -o find_list
 
+graph: $(HEADER3) $(HEADER2) $(HEADER) graph.c
+	$(CC) $(CFLAGS) graph.c ds_list.c ds_memory.o -o graph
+
 clean:
 	rm *.o
 	rm main
@@ -106,4 +109,6 @@ clean:
 	rm insert_list
 	rm swap_list
 	rm find_list
+	rm graph
+	rm elements.txt
 	rm *.bin

@@ -229,12 +229,15 @@ int ds_read_elements( char *filename )
   if ( !(fp) )
   {
     /*printf("Error cannot open file\n");*/
+    /*printf("fail2\n");*/
     return -1;
   }
   while (!feof(fp))
   {
+
     if ( fscanf( fp, "%d", &value) != 1 )
     {
+      /*printf("fail1\n");*/
       break;
     }
     ds_insert( value, index );
