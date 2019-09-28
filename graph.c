@@ -6,8 +6,7 @@
 
 int main ( int argc, char **argv )
 {
-  int numLines, i, randomInt, randomIndex;
-  long index;
+  int numLines, i, randomInt;
   FILE *fp;
 
   if (argc !=2)

@@ -3,7 +3,7 @@
 
 int main () {
 
-  ds_create( "list.bin", 2048 );
+  ds_create( "list.bin", 5000 );
   ds_create_list();
   return 0;
 }

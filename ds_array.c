@@ -132,7 +132,7 @@ int ds_read_elements( char *filename )
 {
   FILE *fp;
   int value;
-  long index;
+  long index = 0;
   fp = fopen(filename, "r");
   if ( !(fp) )
   {

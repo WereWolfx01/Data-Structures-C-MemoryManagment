@@ -5,7 +5,7 @@ int main ( int argc, char **argv )
 {
 
   int i, randomIndex, numLines;
-  long index;
+  long index1, index2;
 
   if (argc !=2)
   {
@@ -22,9 +22,11 @@ int main ( int argc, char **argv )
   for( i=30; i>0; i--)
   {
     randomIndex = rand() % (((numLines-1) + 1 - 0) + 0);
-    index = randomIndex;
-    printf("replacing %d at %ld\n", 0, index);
-    ds_replace(0 , index);
+    index1 = randomIndex;
+    randomIndex = rand() % (((numLines-1) + 1 - 0) + 0);
+    index2 = randomIndex;
+    printf("swapping %ld and %ld\n", index1, index2);
+    ds_insert( 0, index1);
   }
   ds_finish_list();
 
