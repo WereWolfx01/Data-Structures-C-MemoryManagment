@@ -1,3 +1,10 @@
+/*
+Aeman Abdulmuhssen
+1003984
+aabdulmu@uoguelph.ca
+*/
+
+
 #include <stdio.h>
 #include <stdlib.h>
 

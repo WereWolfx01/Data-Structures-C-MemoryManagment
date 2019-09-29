@@ -1,3 +1,9 @@
+/*
+Aeman Abdulmuhssen
+1003984
+aabdulmu@uoguelph.ca
+*/
+
 #include "ds_memory.h"
 
 struct ds_file_struct ds_file;
@@ -40,10 +46,10 @@ int ds_create( char *filename, long size ) {
 int ds_init( char *filename ) {
   ds_file.fp = fopen( filename, "rb+" );
   if ( ds_file.fp == NULL ) {
-    return 1;
+    return -1;
   }
   if ( fread( ds_file.block, sizeof(struct ds_blocks_struct), MAX_BLOCKS, ds_file.fp ) != MAX_BLOCKS ) {
-    return 1;
+    return -1;
   }
   ds_counts.reads = 0;
   ds_counts.writes = 0;
@@ -97,11 +103,14 @@ void ds_free( long start ) {
 
 int ds_finish() {
 
-  /*return 0 if unsuccessful (code unfinished)*/
+  /*return 0 if unsuccessful */
 
   fseek(ds_file.fp, 0, SEEK_SET); /*Seek to start of file*/
   fwrite( ds_file.block, sizeof(struct ds_blocks_struct), MAX_BLOCKS, ds_file.fp );
-  fclose(ds_file.fp);
+  if ( fclose(ds_file.fp) != 0 )
+  {
+    return 0;
+  }
   printf("reads: %d\n", ds_counts.reads);
   printf("writes: %d\n", ds_counts.writes);
 

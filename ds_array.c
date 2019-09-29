@@ -1,3 +1,9 @@
+/*
+Aeman Abdulmuhssen
+1003984
+aabdulmu@uoguelph.ca
+*/
+
 #include "ds_array.h"
 #include "ds_memory.h"
 
@@ -6,10 +12,19 @@ int ds_create_array()
   long temp;
   int array[MAX_ELEMENTS];
   temp = 0;
-  ds_init("array.bin");
-  ds_malloc(sizeof(long));
+  if ( ds_init("array.bin") == -1 )
+  {
+    return -1;
+  }
+  if (  ds_malloc(sizeof(long)) == -1 )
+  {
+    return -1;
+  }
   ds_write(0, &temp, 8);
-  ds_malloc(sizeof(array));
+  if ( ds_malloc(sizeof(array)) == -1 )
+  {
+    return -1;
+  }
   ds_finish();
   /* if non successful return value other than 0*/
   return 0;
@@ -18,7 +33,10 @@ int ds_create_array()
 int ds_init_array()
 {
   long temp = 1;
-  ds_init("array.bin");
+  if ( ds_init("array.bin") == -1 )
+  {
+    return -1;
+  }
   ds_read( &temp, 0, sizeof(long) );
   elements = temp;
   /*if unsuccessful returnvalue other than 0*/

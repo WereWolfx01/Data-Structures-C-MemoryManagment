@@ -1,5 +1,12 @@
+/*
+Aeman Abdulmuhssen
+1003984
+aabdulmu@uoguelph.ca
+*/
+
+
 #include "ds_list.h"
-#include "ds_array.h"
+/*#include "ds_array.h"*/
 #include "ds_memory.h"
 
 
@@ -32,7 +39,7 @@ int ds_insert( int value, long index )
 
   for ( i=index; i>0; i--)
   {
-    if( previous.next == -1 )
+    if( previous.next == -1 ) /*if no elements in the list*/
     {
       return -1;
     }
@@ -43,7 +50,7 @@ int ds_insert( int value, long index )
   new.next = previous.next;
   address = ds_malloc( sizeof(struct ds_list_item_struct) );
   previous.next = address;
-  ds_write( address, &new, sizeof(struct ds_list_item_struct) );
+  ds_write( address, &new, sizeof(struct ds_list_item_struct) ); /*write the new struct*/
 
   if (previous_loc == 0) {
     ds_write( 0, &address, sizeof(long) );
@@ -71,9 +78,9 @@ int ds_replace( int value, long index )
     previous_loc = previous.next;
     ds_read( &previous, previous_loc, 16 );
   }
-  ds_read( &current, previous.next, sizeof(struct ds_list_item_struct) );
+  ds_read( &current, previous.next, sizeof(struct ds_list_item_struct) ); /*reading struct at current index*/
   current.item = value;
-  ds_write( previous.next, &current, sizeof(struct ds_list_item_struct) );
+  ds_write( previous.next, &current, sizeof(struct ds_list_item_struct) ); /*updating struct at current index*/
 
   return 0;
 }
@@ -105,11 +112,11 @@ int ds_delete( long index )
     ds_free( previous.next );
     return 0;
   }
-  ds_read( &current, previous.next, sizeof(struct ds_list_item_struct) );
+  ds_read( &current, previous.next, sizeof(struct ds_list_item_struct) ); /*read struct that is being deleted*/
   current_loc = previous.next;
-  previous.next = current.next;
-  ds_free( current_loc );
-  ds_write( previous_loc, &previous, sizeof(struct ds_list_item_struct) );
+  previous.next = current.next; /*update the previous struct's next*/
+  ds_free( current_loc ); /*freeing struct at index*/
+  ds_write( previous_loc, &previous, sizeof(struct ds_list_item_struct) ); /*updating previous struct's next*/
 
 
   return 0;
@@ -165,9 +172,11 @@ int ds_swap( long index1, long index2 )
   ds_read( &swap2, loc2, sizeof(struct ds_list_item_struct) );
   temp2 = swap2.item;
 
+  /*updating the items in structs at index1 and index2*/
   swap1.item = temp2;
   swap2.item = temp1;
 
+  /*writing the updated structs into file*/
   ds_write( loc1, &swap1, sizeof(struct ds_list_item_struct) );
   ds_write( loc2, &swap2, sizeof(struct ds_list_item_struct) );
 

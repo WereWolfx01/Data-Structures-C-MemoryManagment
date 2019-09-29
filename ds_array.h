@@ -1,3 +1,9 @@
+/*
+Aeman Abdulmuhssen
+1003984
+aabdulmu@uoguelph.ca
+*/
+
 #include <stdio.h>
 
 #define MAX_ELEMENTS 256
