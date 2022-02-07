@@ -1,8 +1,4 @@
-/*
-Aeman Abdulmuhssen
-1003984
-aabdulmu@uoguelph.ca
-*/
+
 
 #include "ds_memory.h"
 
