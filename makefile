@@ -1,6 +1,4 @@
-# Aeman Abdulmuhssen
-# 1003984
-# aabdulmu@uoguelph.ca
+
 CFLAGS = -ansi -pedantic -Wall
 CC = gcc
 HEADER = ds_memory.h
